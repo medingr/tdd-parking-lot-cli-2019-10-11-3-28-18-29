@@ -25,6 +25,7 @@ public class ParkingLot {
             return null;
         }
         cars.put(ticket,car);
+
         return ticket;
     }
     public Car fetch(ParkingTicket ticket) {

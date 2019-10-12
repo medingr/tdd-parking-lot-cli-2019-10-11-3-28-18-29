@@ -10,12 +10,19 @@ public class ParkingBoy {
     }
 
     public ParkingTicket park(Car car) {
+         if ( parkingLot.getAvailableParkingPosition() == 0) {
+             lastErrorMessage = "Not enough position.";
+         }
           return parkingLot.park(car);
     }
 
     public Car fetch(ParkingTicket ticket) {
        Car car =  parkingLot.fetch(ticket);
-       if ( car == null) {
+
+       if (ticket == null ){
+           lastErrorMessage = "Please provide your parking ticket.";
+           return null;
+       } else if ( car == null) {
            lastErrorMessage = "Unrecognized parking ticket";
            return null;
        } else {

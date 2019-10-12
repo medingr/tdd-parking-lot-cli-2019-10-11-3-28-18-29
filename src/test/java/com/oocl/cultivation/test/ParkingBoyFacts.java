@@ -93,4 +93,31 @@ class ParkingBoyFacts {
         assertEquals(parkBoy.getLastErrorMessage(),"Unrecognized parking ticket");
     }
 
+    @Test
+    public void should_not_fetch_car_when_ticket_is_no_ticket_from_customer() {
+        ParkingLot parkLot = new ParkingLot();
+        ParkingBoy parkBoy = new ParkingBoy(parkLot);
+        Car car = new Car();
+        ParkingTicket ticket = parkBoy.park(car);
+        car = parkBoy.fetch(null);
+
+        assertNull(car);
+        assertEquals(parkBoy.getLastErrorMessage(),"Please provide your parking ticket.");
+    }
+
+    @Test
+    public void should_return_not_enough_position_when_parkBoy_park_without_position() {
+        ParkingLot parkLot = new ParkingLot();
+        ParkingBoy parkBoy = new ParkingBoy(parkLot);
+        Car car = new Car();
+
+        ParkingTicket ticket = new ParkingTicket();
+        for ( int i = 0 ; i <= 10 ; i++ ){
+            ticket = parkBoy.park(car);
+        }
+
+        assertNull(ticket);
+        assertEquals(parkBoy.getLastErrorMessage(),"Not enough position.");
+    }
+
 }
