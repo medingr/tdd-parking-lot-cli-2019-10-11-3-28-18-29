@@ -1,9 +1,6 @@
 package com.oocl.cultivation.test;
 
-import com.oocl.cultivation.Car;
-import com.oocl.cultivation.ParkingBoy;
-import com.oocl.cultivation.ParkingLot;
-import com.oocl.cultivation.ParkingTicket;
+import com.oocl.cultivation.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -141,10 +138,8 @@ class ParkingBoyFacts {
         assertEquals(parkBoy.getLastErrorMessage(),"Not enough position.");
     }
 
-        @Test
+    @Test
     public void should_park_boy_park_into_multiple_parking_lots() {
-
-            List<ParkingLot> parkingLotsToManage = new ArrayList<>();
 
             ParkingLot parkLot = new ParkingLot();
             ParkingLot parkLotTwo = new ParkingLot();
@@ -159,7 +154,22 @@ class ParkingBoyFacts {
 
             ParkingTicket ticket =  parkBoy.park(new Car());
             assertNotNull(ticket);
+    }
 
+    @Test
+    public void should_park_in_parking_lot_with_more_empty_position_by_smart_parking_boy() {
+        ParkingLot parkLot = new ParkingLot();
+        ParkingLot parkLotTwo = new ParkingLot();
+        parkingLotsToManage.add(parkLot);
+        parkingLotsToManage.add(parkLotTwo);
+        SmartParkingBoy smartBoy = new SmartParkingBoy(parkingLotsToManage);
+         Car car = new Car();
+         smartBoy.park(car);
+         smartBoy.park(car);
+
+
+        ParkingTicket ticket =  smartBoy.park(new Car());
+        assertNotNull(ticket);
     }
 
 

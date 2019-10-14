@@ -5,7 +5,16 @@ import java.util.List;
 
 public class ParkingBoy {
 
+    public List<ParkingLot> getParkingLotsToManage() {
+        return parkingLotsToManage;
+    }
+
     private final List<ParkingLot> parkingLotsToManage;
+
+    public void setLastErrorMessage(String lastErrorMessage) {
+        this.lastErrorMessage = lastErrorMessage;
+    }
+
     private String lastErrorMessage;
 
     public ParkingBoy(List <ParkingLot> parkingLotsToManage) {
