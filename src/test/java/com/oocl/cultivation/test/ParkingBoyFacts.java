@@ -76,6 +76,8 @@ class ParkingBoyFacts {
         Car car = new Car();
         ParkingTicket ticket = parkBoy.park(car);
         Car carFetchedByTicket = parkBoy.fetch(ticket);
+        carFetchedByTicket = parkBoy.fetch(ticket);
+
         assertNull(carFetchedByTicket);
     }
 
@@ -104,7 +106,7 @@ class ParkingBoyFacts {
 
         Car car2 = parkBoy.fetch(new ParkingTicket());
         assertNull(car2);
-        assertEquals(parkBoy.getLastErrorMessage(),"Unrecognized parking ticket");
+        assertEquals(parkBoy.getLastErrorMessage(),"Unrecognized parking ticket.");
     }
 
     @Test
@@ -118,7 +120,7 @@ class ParkingBoyFacts {
         car = parkBoy.fetch(null);
 
         assertNull(car);
-        assertEquals(parkBoy.getLastErrorMessage(),"Please provide your parking ticket.");
+        assertEquals(parkBoy.getLastErrorMessage(),"Please provide your parking ticket");
     }
 
     @Test
@@ -172,5 +174,23 @@ class ParkingBoyFacts {
         assertNotNull(ticket);
     }
 
+    @Test
+    public void should_park_in_parking_lot_with_larger_availabe_position_rate_by_super_smart_parking_boy() {
+        ParkingLot parkLot = new ParkingLot();
+        ParkingLot parkLotTwo = new ParkingLot();
+        parkingLotsToManage.add(parkLot);
+        parkingLotsToManage.add(parkLotTwo);
+        SuperSmartParkingBoy superSmartBoy = new SuperSmartParkingBoy(parkingLotsToManage);
+        Car car = new Car();
+        superSmartBoy.park(car);
+        superSmartBoy.park(car);
+
+
+        ParkingTicket ticket =  superSmartBoy.park(car);
+        car = superSmartBoy.fetch(ticket);
+        assertNotNull(ticket);
+        assertNotNull(car);
+
+    }
 
 }

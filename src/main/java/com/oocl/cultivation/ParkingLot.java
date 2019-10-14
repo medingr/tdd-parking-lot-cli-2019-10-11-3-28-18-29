@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ParkingLot {
+    public int getCapacity() {
+        return capacity;
+    }
+
     private final int capacity;
     private Map<ParkingTicket, Car> cars = new HashMap<>();
 
