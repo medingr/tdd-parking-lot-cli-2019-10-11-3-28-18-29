@@ -1,33 +1,55 @@
 package com.oocl.cultivation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ParkingBoy {
 
-    private final ParkingLot parkingLot;
+    private final List<ParkingLot> parkingLotsToManage;
     private String lastErrorMessage;
 
-    public ParkingBoy(ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
+    public ParkingBoy(List <ParkingLot> parkingLotsToManage) {
+        this.parkingLotsToManage = parkingLotsToManage;
     }
 
     public ParkingTicket park(Car car) {
-         if ( parkingLot.getAvailableParkingPosition() == 0) {
-             lastErrorMessage = "Not enough position.";
-         }
-          return parkingLot.park(car);
+
+            ParkingTicket ticket = new ParkingTicket();
+
+            for (ParkingLot parkingLot : parkingLotsToManage )
+            {
+                if ( parkingLot.getAvailableParkingPosition() == 0) {
+                    lastErrorMessage = "Not enough position.";
+                    ticket = null;
+                } else {
+                    ticket = parkingLot.park(car);
+                    break;
+                }
+
+            }
+        return ticket;
     }
 
     public Car fetch(ParkingTicket ticket) {
-       Car car =  parkingLot.fetch(ticket);
+       Car car =  new Car();
 
        if (ticket == null ){
            lastErrorMessage = "Please provide your parking ticket.";
            return null;
-       } else if ( car == null) {
+       }
+       for (ParkingLot parkingLot : parkingLotsToManage) {
+           if ( parkingLot.fetch(ticket) != null){
+               car = parkingLot.fetch(ticket);
+           }else {
+               car = null;
+           }
+       }
+
+       if ( car == null) {
            lastErrorMessage = "Unrecognized parking ticket";
            return null;
-       } else {
-          return car;
        }
+          return car;
     }
 
     public String getLastErrorMessage() {
